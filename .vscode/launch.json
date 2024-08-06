@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AppTriagemCurriculosApplication<AppTriagemCurriculos>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.AppTriagemCurriculos.AppTriagemCurriculos.AppTriagemCurriculosApplication",
+            "projectName": "AppTriagemCurriculos",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
