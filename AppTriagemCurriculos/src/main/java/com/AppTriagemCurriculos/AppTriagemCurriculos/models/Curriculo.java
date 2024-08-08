@@ -1,4 +1,4 @@
-package com.models;
+package com.AppTriagemCurriculos.AppTriagemCurriculos.models;
 
 //imports
 import java.util.List;
