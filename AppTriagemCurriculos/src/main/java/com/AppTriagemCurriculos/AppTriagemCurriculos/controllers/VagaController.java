@@ -23,18 +23,18 @@ public class VagaController {
 
     // Registra formulario e trata possíveis erros 
     @RequestMapping(value = "/cadastraVaga", method = RequestMethod.POST)
-    public String registrarFormulario(@Valid Vaga vaga, BindingResult result, RedirectAttributes atributtes) 
+    public String registrarFormulario(@Valid Vaga vaga, BindingResult bindingResult, RedirectAttributes redirectAtributtes) 
     {
         // Se tiver erros no preenchimento do formulário: mostrar mensagem de erro e retornar para cadastro 
-        if(result.hasErrors())
+        if(bindingResult.hasErrors())
         {
-            atributtes.addFlashAttribute("mensagem", "Verifique os campos corretamente...");
+            redirectAtributtes.addFlashAttribute("mensagem", "Verifique os campos corretamente...");
             return "redirect:/cadastrarVaga";
         }
 
         // Registra os dados 
         vr.save(vaga);
-        atributtes.addFlashAttribute("mensagem", "Vaga cadastrada com sucesso!");
+        redirectAtributtes.addFlashAttribute("mensagem", "Vaga cadastrada com sucesso!");
         return "redirect:/cadastrarVaga";
     }
 }

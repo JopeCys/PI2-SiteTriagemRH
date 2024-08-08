@@ -1,65 +1,65 @@
 package com.AppTriagemCurriculos.AppTriagemCurriculos.models;
 
-//imports
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotEmpty;
 
-@Entity  
+@Entity
 public class Curriculo {
-	@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int curriculo_id;
-	
-	@NotEmpty
-	private Candidato candidatos;
-	
-	@OneToMany
-	private List<Vaga> vagas;
-	
-	@Lob
-	@Column(columnDefinition = "TEXT")
-	@NotEmpty
-	private String arquivo;
+    private int curriculo_id;
 
-	// Getters
-	public int getCurriculo_id() {
-		return curriculo_id;
-	}
+    @ManyToOne
+    private Candidato candidato;
 
-	public Candidato getCandidatos() {
-		return candidatos;
-	}
+    @ManyToOne
+    private Vaga vaga;
 
-	public List<Vaga> getVagas() {
-		return vagas;
-	}
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    @NotEmpty
+    private String arquivo;
 
-	public String getArquivo() {
-		return arquivo;
-	}
+    // Getters
+    public int getCurriculo_id() {
+        return curriculo_id;
+    }
 
-	// Setters
-	public void setCurriculo_id(int curriculo_id) {
-		this.curriculo_id = curriculo_id;
-	}
+    public Candidato getCandidato() {
+        return candidato;
+    }
 
-	public void setCandidatos(Candidato candidatos) {
-		this.candidatos = candidatos;
-	}
+    public Vaga getVaga() {
+        return vaga;
+    }
 
-	public void setVagas(List<Vaga> vagas) {
-		this.vagas = vagas;
-	}
+    public String getArquivo() {
+        return arquivo;
+    }
 
-	public void setArquivo(String arquivo) {
-		this.arquivo = arquivo;
-	}
+    // Setters
+    public void setCurriculo_id(int curriculo_id) {
+        this.curriculo_id = curriculo_id;
+    }
+
+    public void setCandidato(Candidato candidato) {
+        this.candidato = candidato;
+    }
+
+    public void setVaga(Vaga vaga) {
+        this.vaga = vaga;
+    }
+
+    public void setArquivo(String arquivo) {
+        this.arquivo = arquivo;
+    }
+
+    
 }

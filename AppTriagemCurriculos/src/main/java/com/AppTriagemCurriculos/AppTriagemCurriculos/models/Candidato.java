@@ -1,17 +1,17 @@
 package com.AppTriagemCurriculos.AppTriagemCurriculos.models;
 
-// Imports
 import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
-public class Candidato 
-{
+public class Candidato {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long candidato_id;
@@ -28,11 +28,16 @@ public class Candidato
     @NotEmpty
     private String email;
 
-    @OneToMany
-    private List<Curriculo> curriculo;
+    @OneToMany(mappedBy = "candidato")
+    private List<Curriculo> curriculos;
 
+    @ManyToOne
+    private FuncionarioRH funcionarioRH;
 
-    // Getters 
+    @ManyToOne
+    private GerenteDeptoVagas gerenteDeptoVagas;
+
+    // Getters
     public long getCandidato_id() {
         return candidato_id;
     }
@@ -53,8 +58,16 @@ public class Candidato
         return email;
     }
 
-    public List<Curriculo> getCurriculo() {
-        return curriculo;
+    public List<Curriculo> getCurriculos() {
+        return curriculos;
+    }
+
+    public FuncionarioRH getFuncionarioRH() {
+        return funcionarioRH;
+    }
+
+    public GerenteDeptoVagas getGerenteDeptoVagas() {
+        return gerenteDeptoVagas;
     }
 
     // Setters
@@ -78,7 +91,16 @@ public class Candidato
         this.email = email;
     }
 
-    public void setCurriculo(List<Curriculo> curriculo) {
-        this.curriculo = curriculo;
+    public void setCurriculos(List<Curriculo> curriculos) {
+        this.curriculos = curriculos;
     }
+
+    public void setFuncionarioRH(FuncionarioRH funcionarioRH) {
+        this.funcionarioRH = funcionarioRH;
+    }
+
+    public void setGerenteDeptoVagas(GerenteDeptoVagas gerenteDeptoVagas) {
+        this.gerenteDeptoVagas = gerenteDeptoVagas;
+    }
+
 }

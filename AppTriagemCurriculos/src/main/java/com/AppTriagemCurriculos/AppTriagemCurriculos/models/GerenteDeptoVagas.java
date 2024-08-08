@@ -1,8 +1,6 @@
 package com.AppTriagemCurriculos.AppTriagemCurriculos.models;
 
 import java.util.List;
-
-// Imports
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,16 +9,16 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class GerenteDeptoVagas {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long gerente_depto_vagas_id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "gerenteDeptoVagas")
     private List<Candidato> candidatos;
 
-    // Getters 
 
+    // Getters
     public long getGerente_depto_vagas_id() {
         return gerente_depto_vagas_id;
     }
@@ -37,5 +35,6 @@ public class GerenteDeptoVagas {
     public void setCandidatos(List<Candidato> candidatos) {
         this.candidatos = candidatos;
     }
+
     
 }

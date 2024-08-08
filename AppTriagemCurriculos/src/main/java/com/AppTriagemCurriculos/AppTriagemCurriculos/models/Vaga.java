@@ -1,6 +1,5 @@
 package com.AppTriagemCurriculos.AppTriagemCurriculos.models;
 
-// Imports
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,13 +9,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Entity
 public class Vaga {
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long vaga_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long vagaId;
 
     @NotEmpty
     private String nome;
@@ -30,11 +30,11 @@ public class Vaga {
     private String area;
 
     @OneToMany(mappedBy = "vaga", cascade = CascadeType.REMOVE)
-    private Curriculo curriculo;
+    private List<Curriculo> curriculos;
 
     // Getters
-    public long getVaga_id() {
-        return vaga_id;
+    public long getVagaId() {
+        return vagaId;
     }
 
     public String getNome() {
@@ -49,15 +49,14 @@ public class Vaga {
         return area;
     }
 
-    public Curriculo getCurriculo() {
-        return curriculo;
+    public List<Curriculo> getCurriculos() {
+        return curriculos;
     }
 
     // Setters
-    public void setVaga_id(long vaga_id) {
-        this.vaga_id = vaga_id;
+    public void setVagaId(long vagaId) {
+        this.vagaId = vagaId;
     }
-
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -71,7 +70,10 @@ public class Vaga {
         this.area = area;
     }
 
-    public void setCurriculo(Curriculo curriculo) {
-        this.curriculo = curriculo;
+    public void setCurriculos(List<Curriculo> curriculos) {
+        this.curriculos = curriculos;
     }
+
+    
 }
+    
