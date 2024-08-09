@@ -14,7 +14,7 @@ public class Candidato {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long candidato_id;
+    private long candidatoId;
 
     @NotEmpty
     private String login;
@@ -39,7 +39,7 @@ public class Candidato {
 
     // Getters
     public long getCandidato_id() {
-        return candidato_id;
+        return candidatoId;
     }
 
     public String getLogin() {
@@ -72,7 +72,7 @@ public class Candidato {
 
     // Setters
     public void setCandidato_id(long candidato_id) {
-        this.candidato_id = candidato_id;
+        this.candidatoId = candidato_id;
     }
 
     public void setLogin(String login) {
