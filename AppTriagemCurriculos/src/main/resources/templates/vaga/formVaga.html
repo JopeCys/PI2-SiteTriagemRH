@@ -12,6 +12,7 @@
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
+
 <body>
 
 	<header>
@@ -26,14 +27,14 @@
 					<ul class="navbar-nav">
 						<li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
 
-						<li class="nav-item"><a class="nav-link" href="/cadastrarVaga">
-								Cadastrar Vaga
-						</li>
+						<li class="nav-item"><a class="nav-link" href="/cadastrarVaga"> Cadastrar Vaga </a></li>
 					</ul>
 				</div>
 			</div>
 		</nav>
 	</header>
+
+	<th:block th:include="mensagemValidacao"></th:block>
 
 	<div class="container">
 		<h1>Cadastrar vaga</h1>
@@ -42,30 +43,14 @@
 
 			<div class="form-group">
 				<label for=""><b>Nome do cargo:</b> </label> <input type="text" class="form-control" value=""
-					placeholder="Insira o nome do cargo" name="nome" required> <small class="form-text text-muted"><i>*
-						Utilize nomes e termos mais utilizados no mercado.</i></small>
+					placeholder="Insira o nome do cargo" name="nome" required>
 			</div>
 
-			<div class="row">
-				<div class="col">
-
-					<div class="form-group">
-						<label for=""><b>Data de expiração:</b></label> <input type="date" value="" name="data"
-							class="form-control" required /> <small class="form-text text-muted"><i>* Data em que a vaga
-								expira.</i></small>
-					</div>
-				</div>
-				<div class="col">
-					<div class="form-group">
-						<label for=""><b>Salário:</b></label> R$ <input type="number" pattern="^\d+(\.|\,)\d{2}$"
-							value="" name="salario" class="form-control" required /> <small
-							class="form-text text-muted"><i>* Utilize valores
-								considerando vírgula e ponto.</i></small>
-					</div>
-				</div>
+			<div class="form-group">
+				<label for=""><b>Area do cargo: </b> </label> <input type="text" class="form-control" value=""
+				placeholder="Insira a area do cargo" name="area" required>
 			</div>
-
-
+			
 			<div class="form-group">
 				<label for=""><b>Descrição da vaga:</b></label>
 				<textarea class="form-control" name="descricao" maxlength="254" rows="3" required></textarea>
@@ -73,17 +58,15 @@
 						vaga oferecida..</i></small>
 			</div>
 
-
 			<button type="submit" class="btn btn-success">Adicionar Vaga</button>
 		</form>
 	</div>
 
 	<div style="height: 100px;"></div>
 
-	<div class="footer fixed-bottom bg-dark text-center py-3">
+	<footer class="footer fixed-bottom bg-dark text-center py-3">
 		<span class="text-light align-middle">| App Triagem RH |</span>
-	</div>
-
+	</footer>
 </body>
 
 </html>

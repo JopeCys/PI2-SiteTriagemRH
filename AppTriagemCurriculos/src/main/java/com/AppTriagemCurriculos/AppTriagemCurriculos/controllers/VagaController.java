@@ -1,5 +1,6 @@
 package com.AppTriagemCurriculos.AppTriagemCurriculos.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 // Imports
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,8 @@ import com.AppTriagemCurriculos.AppTriagemCurriculos.repository.VagaRepository;
 
 @Controller
 public class VagaController {
+    
+    @Autowired
     private VagaRepository vr;
 
     // CASDASTRO DE VAGA
@@ -26,7 +29,7 @@ public class VagaController {
     }
 
     // Registra formulario e trata possíveis erros 
-    @RequestMapping(value = "/cadastraVaga", method = RequestMethod.POST)
+    @RequestMapping(value = "/cadastrarVaga", method = RequestMethod.POST)
     public String registrarFormulario(@Valid Vaga vaga, BindingResult bindingResult, RedirectAttributes redirectAtributtes) 
     {
         // Se tiver erros no preenchimento do formulário: mostrar mensagem de erro e retornar para cadastro 

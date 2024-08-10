@@ -11,7 +11,7 @@ import jakarta.persistence.OneToMany;
 public class FuncionarioRH {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long funcionario_rh_id;
 
     @OneToMany(mappedBy = "funcionarioRH")
