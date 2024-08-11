@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>| App Triagem RH |</title>
+
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <header>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">App Triagem RH</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+	<th:block th:include="mensagemValidacao"> </th:block>
+
+    <div class="container">
+
+        <h1>Lista de vagas cadastradas</h1>
+
+        <table class="table table-hover table-responsive w-auto table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Nome da vaga:</th>
+                    <th scope="col">Area do cargo:</th>
+                    <th scope="col">Descrição:</th>
+                    <th scope="col">Ações:</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="vaga : ${vagas}">
+					<td><span th:text="${vaga.nome}"></span></td>
+					<td><span th:text="${vaga.area}"></span></td>
+					<td><span th:text="${vaga.descricao}"></span></td>
+					<td><span></span></td>
+					<td><a th:href="${(#mvc.url('VC#deletarVaga').arg(0, vaga.vagaId)).build()}"><button type="button" class="btn btn-danger">Excluir</button></a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="height: 100px;"></div>
+
+        <footer class="footer fixed-bottom bg-dark text-center py-3">
+            <span class="text-light align-middle">| App Triagem RH |</span>
+        </footer>
+    </div>
+</body>
+
+</html>

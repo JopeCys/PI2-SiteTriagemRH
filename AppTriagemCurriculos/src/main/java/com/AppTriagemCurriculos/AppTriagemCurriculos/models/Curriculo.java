@@ -5,21 +5,25 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
+@Table(name = "curriculo")
 public class Curriculo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int curriculo_id;
+    private int curriculoId;
 
     @ManyToOne
     private Candidato candidato;
 
     @ManyToOne
+    @JoinColumn(name = "vaga_id")
     private Vaga vaga;
 
     @Lob
@@ -28,8 +32,8 @@ public class Curriculo {
     private String arquivo;
 
     // Getters
-    public int getCurriculo_id() {
-        return curriculo_id;
+    public int getcurriculoId() {
+        return curriculoId;
     }
 
     public Candidato getCandidato() {
@@ -45,8 +49,8 @@ public class Curriculo {
     }
 
     // Setters
-    public void setCurriculo_id(int curriculo_id) {
-        this.curriculo_id = curriculo_id;
+    public void setcurriculoId(int curriculoId) {
+        this.curriculoId = curriculoId;
     }
 
     public void setCandidato(Candidato candidato) {

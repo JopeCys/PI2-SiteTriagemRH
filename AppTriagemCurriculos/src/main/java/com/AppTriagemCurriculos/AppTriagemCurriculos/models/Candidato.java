@@ -5,11 +5,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
+@Table(name = "candidato")
 public class Candidato {
 
     @Id
@@ -32,9 +35,11 @@ public class Candidato {
     private List<Curriculo> curriculos;
 
     @ManyToOne
+    @JoinColumn(name = "funcionario_rh_id") // Especificando o nome da coluna de chave estrangeira
     private FuncionarioRH funcionarioRH;
 
     @ManyToOne
+    @JoinColumn(name = "gerente_depto_vagas_id") // Especificando o nome da coluna de chave estrangeira
     private GerenteDeptoVagas gerenteDeptoVagas;
 
     // Getters

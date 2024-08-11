@@ -6,12 +6,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
+@Table(name = "vaga")
 public class Vaga {
 
     @Id
