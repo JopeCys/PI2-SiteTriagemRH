@@ -59,7 +59,19 @@
 					<td><span th:text="${vaga.area}"></span></td>
 					<td><span th:text="${vaga.descricao}"></span></td>
 					<td><span></span></td>
-					<td><a th:href="${(#mvc.url('VC#deletarVaga').arg(0, vaga.vagaId)).build()}"><button type="button" class="btn btn-danger">Excluir</button></a></td>
+					<td>
+                        <form th:action="@{/deletarVaga}" method="post">
+                            <input type="hidden" name="vagaId" th:value="${vaga.vagaId}"/>
+                            <button type="submit" class="btn btn-danger">Excluir</button>
+                        </form>
+                    </td>
+
+                    <td>
+                        <form th:action="@{/editarVaga}" method="post">
+                            <input type="hidden" name="vagaId" th:value="${vaga.vagaId}"/>
+                            <button type="submit" class="btn btn-primary">Editar</button>
+                        </form>
+                    </td>
                 </tr>
             </tbody>
         </table>

@@ -1,20 +1,20 @@
 package com.AppTriagemCurriculos.AppTriagemCurriculos.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 // Imports
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.validation.Valid;
 
 // import
-import com.AppTriagemCurriculos.AppTriagemCurriculos.models.Curriculo;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.models.Vaga;
-import com.AppTriagemCurriculos.AppTriagemCurriculos.repository.CurriculoRepository;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.repository.VagaRepository;
 
 @Controller
@@ -22,9 +22,6 @@ public class VagaController {
 
     @Autowired
     private VagaRepository vr;
-
-    @Autowired
-    private CurriculoRepository cur;
 
     // CASDASTRO DE VAGA
 
@@ -40,8 +37,17 @@ public class VagaController {
             RedirectAttributes redirectAtributtes) {
         // Se tiver erros no preenchimento do formulário: mostrar mensagem de erro e
         // retornar para cadastro
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) 
+        {
             redirectAtributtes.addFlashAttribute("mensagem", "Verifique os campos corretamente...");
+            return "redirect:/cadastrarVaga";
+        }
+
+        // Verifica se a vaga já existe
+        Optional<Vaga> vagaExistente = vr.findByNomeAndArea(vaga.getNome(), vaga.getArea());
+        if (vagaExistente.isPresent()) 
+        {
+            redirectAtributtes.addFlashAttribute("mensagem", "Vaga já existe! Não é permitido duplicidade.");
             return "redirect:/cadastrarVaga";
         }
 
@@ -62,33 +68,67 @@ public class VagaController {
     }
 
     // DELETAR VAGA
-    @RequestMapping(value = "/deletarVaga")
-    public String deletarVaga(long vagaId) 
+    @RequestMapping(value = "/deletarVaga", method = RequestMethod.POST)
+    public String deletarVaga(@RequestParam("vagaId") long vagaId, RedirectAttributes attributes) 
     {
         Vaga vaga = vr.findByVagaId(vagaId);
+        
+        if (vaga == null)
+        {
+            attributes.addFlashAttribute("mensagem", "Vaga já foi deletada!");    
+            return "redirect:/vagas";    
+        }
+        
         vr.delete(vaga);
         return "redirect:/vagas";
     }
 
+    // ATUALIZAR/EDITAR VAGA
 
-    // A revisar
-    public String detalhesVagaPost(@PathVariable("vagaId") long vagaId, @Valid Curriculo curriculo,
-            BindingResult result, RedirectAttributes attributes) 
-    {
+    // Mostra vaga em detalhes para ser editada
+    @RequestMapping(value = "/editarVaga", method = RequestMethod.POST)
+    public ModelAndView vagaParaEditar(@RequestParam("vagaId") long vagaId)
+    {   
+        Vaga vagaParaEdicao = vr.findByVagaId(vagaId);
 
-        if(result.hasErrors())
-        {
-            attributes.addFlashAttribute("mensagem", "Verifique os campos");
-            return "redirect:/#";
+        if (vagaParaEdicao == null) 
+        { 
+            ModelAndView mv = listarVagas();
+            return mv;
         }
 
+        ModelAndView mv = new ModelAndView("vaga/updateVaga");
+        mv.addObject("vaga", vagaParaEdicao);
+        return mv;
+    }
 
-        // Gravacao do curriculo na vaga
-        Vaga vaga = vr.findByVagaId(vagaId);
-        curriculo.setVaga(vaga);
-        cur.save(curriculo);
-        attributes.addFlashAttribute("mensagem", "Curriculo adicionado com sucesso!");
-        return "redirect:/#";
-    } 
+    // Salva edições | A REVISAR
+    @RequestMapping(value = "/editarVaga/salvarVaga", method = RequestMethod.POST)
+    public String salvaVagaEditada(@Valid Vaga vaga, BindingResult bindingResult,
+            RedirectAttributes redirectAtributtes)
+    {
+        String caminhoVagaUrl = "" + vaga.getVagaId();
+        
+        // Se tiver erros no preenchimento do formulário: mostrar mensagem de erro e
+        // retornar para cadastro
+        if (bindingResult.hasErrors()) 
+        {
+            redirectAtributtes.addFlashAttribute("mensagem", "Verifique os campos corretamente...");
+            return "redirect:/editarVaga/" + caminhoVagaUrl ;
+        }
+
+        // Verifica se a vaga já existe
+        Optional<Vaga> vagaExistente = vr.findByNomeAndArea(vaga.getNome(), vaga.getArea());
+        if (vagaExistente.isPresent()) 
+        {
+            redirectAtributtes.addFlashAttribute("mensagem", "Vaga já existe! Não é permitido duplicidade.");
+            return "redirect:/editarVaga/" + caminhoVagaUrl;
+        }
+
+        // Registra os dados
+        vr.save(vaga);
+        redirectAtributtes.addFlashAttribute("mensagem", "Vaga cadastrada com sucesso!");
+        return "redirect:/editarVaga/" + caminhoVagaUrl;
+    }
 
 }
