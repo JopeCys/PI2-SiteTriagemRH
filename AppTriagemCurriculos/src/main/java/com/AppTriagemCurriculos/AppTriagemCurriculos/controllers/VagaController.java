@@ -58,10 +58,21 @@ public class VagaController {
     }
 
     // MOSTAR VAGAS EXISTENTES
+    // para gerente depto vagas
     @RequestMapping(value = "/vagas")
     public ModelAndView listarVagas() 
     {
         ModelAndView mv = new ModelAndView("vaga/listaVaga");
+        Iterable<Vaga> vagas = vr.findAll();
+        mv.addObject("vagas", vagas);
+        return mv;
+    }
+
+    // Vagas existentes para candidatos
+    @RequestMapping(value = "/vagasCandidato")
+    public ModelAndView listarVagasSemLogin() 
+    {
+        ModelAndView mv = new ModelAndView("vaga/listaVagaCandidato");
         Iterable<Vaga> vagas = vr.findAll();
         mv.addObject("vagas", vagas);
         return mv;
