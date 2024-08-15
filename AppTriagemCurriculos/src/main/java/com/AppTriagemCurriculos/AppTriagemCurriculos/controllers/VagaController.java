@@ -82,7 +82,7 @@ public class VagaController {
     @RequestMapping(value = "/deletarVaga", method = RequestMethod.POST)
     public String deletarVaga(@RequestParam("vagaId") long vagaId, RedirectAttributes attributes) 
     {
-        Vaga vaga = vr.findByVagaId(vagaId);
+        Vaga vaga = vr.findById(vagaId);
         
         if (vaga == null)
         {
@@ -100,7 +100,7 @@ public class VagaController {
     @RequestMapping(value = "/editarVaga", method = RequestMethod.POST)
     public ModelAndView vagaParaEditar(@RequestParam("vagaId") long vagaId)
     {   
-        Vaga vagaParaEdicao = vr.findByVagaId(vagaId);
+        Vaga vagaParaEdicao = vr.findById(vagaId);
 
         if (vagaParaEdicao == null) 
         { 
@@ -118,7 +118,7 @@ public class VagaController {
     public String salvaVagaEditada(@Valid Vaga vaga, BindingResult bindingResult,
             RedirectAttributes redirectAtributtes)
     {
-        String caminhoVagaUrl = "" + vaga.getVagaId();
+        String caminhoVagaUrl = "" + vaga.getId();
         
         // Se tiver erros no preenchimento do formulário: mostrar mensagem de erro e
         // retornar para cadastro

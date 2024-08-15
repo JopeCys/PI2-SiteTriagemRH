@@ -1,16 +1,7 @@
 package com.AppTriagemCurriculos.AppTriagemCurriculos.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotEmpty;
-import java.util.List;
+import jakarta.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "vaga")
@@ -18,25 +9,29 @@ public class Vaga {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long vagaId;
+    @Column(name = "vagaId")
+    private Long id;
 
-    @NotEmpty
+    @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Lob
-    @Column(columnDefinition = "TEXT")
-    @NotEmpty
+    @Column(name = "descricao")
     private String descricao;
 
-    @NotEmpty
+    @Column(name = "area", nullable = false)
     private String area;
 
-    @OneToMany(mappedBy = "vaga", cascade = CascadeType.REMOVE)
-    private List<Curriculo> curriculos;
+    @ManyToOne
+    @JoinColumn(name = "gerenteDeptoVagasId")
+    private GerenteDeptoVagas gerenteDeptoVagas;
 
+    @OneToMany(mappedBy = "vaga")
+    private Set<Curriculo> curriculos;
+
+    
     // Getters
-    public long getVagaId() {
-        return vagaId;
+    public Long getId() {
+        return id;
     }
 
     public String getNome() {
@@ -51,31 +46,38 @@ public class Vaga {
         return area;
     }
 
-    public List<Curriculo> getCurriculos() {
+    public GerenteDeptoVagas getGerenteDeptoVagas() {
+        return gerenteDeptoVagas;
+    }
+
+    public Set<Curriculo> getCurriculos() {
         return curriculos;
     }
 
+    
     // Setters
-    public void setVagaId(long vagaId) {
-        this.vagaId = vagaId;
+    public void setId(Long id) {
+        this.id = id;
     }
-
+    
     public void setNome(String nome) {
         this.nome = nome;
     }
-
+    
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
+    
     public void setArea(String area) {
         this.area = area;
     }
-
-    public void setCurriculos(List<Curriculo> curriculos) {
+    
+    public void setGerenteDeptoVagas(GerenteDeptoVagas gerenteDeptoVagas) {
+        this.gerenteDeptoVagas = gerenteDeptoVagas;
+    }
+    
+    public void setCurriculos(Set<Curriculo> curriculos) {
         this.curriculos = curriculos;
     }
-
-    
 }
-    
+

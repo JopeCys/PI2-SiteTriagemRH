@@ -1,15 +1,7 @@
 package com.AppTriagemCurriculos.AppTriagemCurriculos.models;
 
-import java.util.List;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "candidato")
@@ -17,67 +9,28 @@ public class Candidato {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long candidatoId;
+    @Column(name = "candidatoId")
+    private Long id;
 
-    @NotEmpty
+    @Column(name = "login", nullable = false)
     private String login;
 
-    @NotEmpty
+    @Column(name = "senha", nullable = false)
     private String senha;
 
-    @NotEmpty
+    @Column(name = "nome", nullable = false)
     private String nome;
 
-    @NotEmpty
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "candidato")
-    private List<Curriculo> curriculos;
-
     @ManyToOne
-    @JoinColumn(name = "funcionario_rh_id") // Especificando o nome da coluna de chave estrangeira
-    private FuncionarioRH funcionarioRH;
-
-    @ManyToOne
-    @JoinColumn(name = "gerente_depto_vagas_id") // Especificando o nome da coluna de chave estrangeira
-    private GerenteDeptoVagas gerenteDeptoVagas;
-
-    // Getters
-    public long getCandidato_id() {
-        return candidatoId;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public List<Curriculo> getCurriculos() {
-        return curriculos;
-    }
-
-    public FuncionarioRH getFuncionarioRH() {
-        return funcionarioRH;
-    }
-
-    public GerenteDeptoVagas getGerenteDeptoVagas() {
-        return gerenteDeptoVagas;
-    }
-
+    @JoinColumn(name = "funcionarioRhId")
+    private FuncionarioRh funcionarioRh;
+    
     // Setters
-    public void setCandidato_id(long candidato_id) {
-        this.candidatoId = candidato_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setLogin(String login) {
@@ -96,16 +49,42 @@ public class Candidato {
         this.email = email;
     }
 
-    public void setCurriculos(List<Curriculo> curriculos) {
+    public void setFuncionarioRh(FuncionarioRh funcionarioRh) {
+        this.funcionarioRh = funcionarioRh;
+    }
+
+    public void setCurriculos(Set<Curriculo> curriculos) {
         this.curriculos = curriculos;
     }
-
-    public void setFuncionarioRH(FuncionarioRH funcionarioRH) {
-        this.funcionarioRH = funcionarioRH;
+    
+    // Getters
+    public Long getId() {
+        return id;
     }
 
-    public void setGerenteDeptoVagas(GerenteDeptoVagas gerenteDeptoVagas) {
-        this.gerenteDeptoVagas = gerenteDeptoVagas;
+    public String getLogin() {
+        return login;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public FuncionarioRh getFuncionarioRh() {
+        return funcionarioRh;
+    }
+
+    public Set<Curriculo> getCurriculos() {
+        return curriculos;
+    }
+    @OneToMany(mappedBy = "candidato")
+    private Set<Curriculo> curriculos;
 }

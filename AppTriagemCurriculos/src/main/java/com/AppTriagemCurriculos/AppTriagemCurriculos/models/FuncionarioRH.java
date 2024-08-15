@@ -1,40 +1,37 @@
 package com.AppTriagemCurriculos.AppTriagemCurriculos.models;
 
-import java.util.List;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "funcionario_rh")
-public class FuncionarioRH {
+public class FuncionarioRh {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long funcionario_rh_id;
+    @Column(name = "funcionarioRhId")
+    private Long id;
 
-    @OneToMany(mappedBy = "funcionarioRH")
-    private List<Candidato> candidatos;
+    @OneToMany(mappedBy = "funcionarioRh")
+    private Set<Candidato> candidatos;
 
-    // Getters
-    public long getFuncionario_rh_id() {
-        return funcionario_rh_id;
+    // Setters
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public List<Candidato> getCandidatos() {
+    public void setCandidatos(Set<Candidato> candidatos) {
+        this.candidatos = candidatos;
+    }
+
+    // Getters
+    public Long getId() {
+        return id;
+    }
+
+    public Set<Candidato> getCandidatos() {
         return candidatos;
     }
 
-    // Setters
-    public void setFuncionario_rh_id(long funcionario_rh_id) {
-        this.funcionario_rh_id = funcionario_rh_id;
-    }
-
-    public void setCandidatos(List<Candidato> candidatos) {
-        this.candidatos = candidatos;
-    }
     
 }

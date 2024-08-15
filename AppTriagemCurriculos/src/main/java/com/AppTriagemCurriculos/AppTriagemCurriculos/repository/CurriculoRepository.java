@@ -9,7 +9,7 @@ import com.AppTriagemCurriculos.AppTriagemCurriculos.models.Vaga;
 
 public interface CurriculoRepository extends CrudRepository<Curriculo, Long> 
 {
-    Curriculo findByCurriculoId(int curriculoId);
+    Curriculo findById(int id);
 
     List<Curriculo> findByVaga(Vaga vaga);
 }

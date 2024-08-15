@@ -11,7 +11,7 @@ import com.AppTriagemCurriculos.AppTriagemCurriculos.models.Candidato;
 
 public interface CandidatoRepository extends CrudRepository<Candidato, Long> 
 {
-    Candidato findByCandidatoId(long candidatoId);
+    Candidato findById(long id);
 
     Optional<Candidato> findByLoginAndEmail(String login, String email);
 

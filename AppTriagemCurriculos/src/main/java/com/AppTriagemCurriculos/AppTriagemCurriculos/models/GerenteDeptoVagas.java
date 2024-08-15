@@ -1,12 +1,7 @@
 package com.AppTriagemCurriculos.AppTriagemCurriculos.models;
 
-import java.util.List;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "gerente_depto_vagas")
@@ -14,29 +9,28 @@ public class GerenteDeptoVagas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long gerente_depto_vagas_id;
-
+    @Column(name = "gerenteDeptoVagasId")
+    private Long id;
+    
     @OneToMany(mappedBy = "gerenteDeptoVagas")
-    private List<Candidato> candidatos;
+    private Set<Vaga> vagas;
+    
+    
+    // Setters
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public void setVagas(Set<Vaga> vagas) {
+        this.vagas = vagas;
+    }
 
     // Getters
-    public long getGerente_depto_vagas_id() {
-        return gerente_depto_vagas_id;
+    public Long getId() {
+        return id;
     }
 
-    public List<Candidato> getCandidatos() {
-        return candidatos;
+    public Set<Vaga> getVagas() {
+        return vagas;
     }
-
-    // Setters
-    public void setGerente_depto_vagas_id(long gerente_depto_vagas_id) {
-        this.gerente_depto_vagas_id = gerente_depto_vagas_id;
-    }
-
-    public void setCandidatos(List<Candidato> candidatos) {
-        this.candidatos = candidatos;
-    }
-
-    
 }
