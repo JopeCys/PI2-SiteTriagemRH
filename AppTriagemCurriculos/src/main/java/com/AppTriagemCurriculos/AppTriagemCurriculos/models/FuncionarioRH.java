@@ -5,7 +5,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "funcionario_rh")
-public class FuncionarioRh {
+public class FuncionarioRH {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

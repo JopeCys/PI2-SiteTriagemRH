@@ -26,7 +26,7 @@ public class Candidato {
 
     @ManyToOne
     @JoinColumn(name = "funcionarioRhId")
-    private FuncionarioRh funcionarioRh;
+    private FuncionarioRH funcionarioRh;
     
     // Setters
     public void setId(Long id) {
@@ -49,7 +49,7 @@ public class Candidato {
         this.email = email;
     }
 
-    public void setFuncionarioRh(FuncionarioRh funcionarioRh) {
+    public void setFuncionarioRh(FuncionarioRH funcionarioRh) {
         this.funcionarioRh = funcionarioRh;
     }
 
@@ -78,7 +78,7 @@ public class Candidato {
         return email;
     }
 
-    public FuncionarioRh getFuncionarioRh() {
+    public FuncionarioRH getFuncionarioRh() {
         return funcionarioRh;
     }
 
