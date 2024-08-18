@@ -1,110 +1,61 @@
 <!DOCTYPE html>
-<html lang=”pt-br” xmlns:th="http://thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="pt-br" xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>App Triagem RH - Login do Candidato</title>
 
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>| App Triagem RH |</title>
-
-<!-- Bootstrap -->
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-	crossorigin="anonymous">
-
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-
-	<header>
-
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="/">App Triagem RH</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarNav"
-					aria-controls="navbarNav" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="/">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="/funcionarios">Candidato</a></li>
-						<li class="nav-item"><a class="nav-link" href="/vagas">
-								Listar Vagas</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-
-	</header>
-
-
-
-	<div class="container">
-
-		<h1>Cadastro de candidato</h1>
-
-		<th:block th:include="mensagem-validacao"></th:block>
-
-		<form method="post">
-
-			<div class="form-group">
-				<label for=""><b>Nome:</b> </label> <input type="text"
-					class="form-control" value=""
-					placeholder="Insira seu nome completo" name="nome" required>
-				<small class="form-text text-muted"><i>* Nome completo.</i></small>
-			</div>
-            <div class="form-group">
-                <label for=""><b>E-mail:</b> </label> <input type="text" value=""
-            name="email" class="form-control" placeholder="email@email.com"
-            required /><small class="form-text text-muted"><i>*</i></small>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">App Triagem RH</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
+                    </ul>
+                </div>
             </div>
-            
-			<div class="row">
-				<div class="col">
-					<div class="form-group">
-						<label for=""><b>Login:</b></label> <input
-							type="text" value="" name="login" class="form-control"  placeholder="Nome de usuário"required />
-						<small class="form-text text-muted"><i>*</i></small>
-					</div>
-				</div>
-				<div class="col">
-					<div class="form-group">
-						<label for=""><b>Senha:</b></label> <input
-							type="password" value="" name="senha" class="form-control" placeholder="Senha"required />
-						<small class="form-text text-muted"><i>* 6+ Caracteres</i></small>
-					</div>
-				</div>
+        </nav>
+    </header>
 
+    <th:block th:include="mensagemValidacao"></th:block>
+
+    <div class="container">
+        <h1>Login do Candidato</h1>
+
+        <form method="post" th:action="@{/loginCandidato}">
+            <div class="form-group">
+				<label for="login"><b>Login:</b></label>
+				<input type="text" class="form-control" id="login" name="login" placeholder="Nome de usuário" required>
+				<small class="form-text text-muted"><i>* Insira seu nome de usuário.</i></small>
 			</div>
-			<button type="submit" class="btn btn-success">Adicionar
-				Candidato</button>
-	</div>
+	
+			<div class="form-group">
+				<label for="senha"><b>Senha:</b></label>
+				<input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required>
+				<small class="form-text text-muted"><i>* 6+ Caracteres.</i></small>
+			</div>
+	
+			<button type="submit" class="btn btn-primary">Entrar</button>
+        </form>
 
-	<br>
-	<br>
+        <div style="height: 100px;"></div>
+    </div>
 
-	</form>
-
-
-	</div>
-
-
-
-	<div style="height: 100px;"></div>
-
-	<footer class="footer fixed-bottom bg-dark text-center py-3">
-		<span class="text-light align-middle">| App Triagem RH</span>
-	</footer>
-
+    <footer class="footer fixed-bottom bg-dark text-center py-3">
+        <span class="text-light align-middle">| App Triagem RH |</span>
+    </footer>
 </body>
 
 </html>

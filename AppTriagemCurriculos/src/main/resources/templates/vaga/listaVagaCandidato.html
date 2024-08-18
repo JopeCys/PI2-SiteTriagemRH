@@ -60,6 +60,14 @@
 					<td><span th:text="${vaga.descricao}"></span></td>
 					<td><span></span></td>
                 </tr>
+
+                <!-- A fazer -->
+                <td>
+                    <form th:action="@{/candidatar}" method="post">
+                        <input type="hidden" name="vagaId" th:value="${vaga.id}"/>
+                        <button type="submit" class="btn btn-primary">Editar</button>
+                    </form>
+                </td>
             </tbody>
         </table>
 

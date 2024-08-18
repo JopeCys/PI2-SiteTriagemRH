@@ -68,7 +68,7 @@ public class VagaController {
         return mv;
     }
 
-    // Vagas existentes para candidatos
+    // Vagas existentes para candidatos - sem poder editar ou excluir
     @RequestMapping(value = "/vagasCandidato")
     public ModelAndView listarVagasSemLogin() 
     {
