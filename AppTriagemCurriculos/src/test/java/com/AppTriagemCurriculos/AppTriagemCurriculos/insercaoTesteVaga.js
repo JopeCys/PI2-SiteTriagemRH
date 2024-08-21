@@ -10,15 +10,14 @@ export const throughput = new Trend('throughput');
 
 export const options = {
     stages: [
-        { duration: '1m', target: 10 },   // Aumenta de 0 a 10 usuários em 1 minuto
-        { duration: '1m', target: 20 },   // Aumenta de 10 a 20 usuários em 1 minuto
-        { duration: '1m', target: 20 },   // Mantém 20 usuários por 1 minuto
-        { duration: '1m', target: 0 },    // Reduz de 20 para 0 usuários em 1 minuto
+        { duration: '30s', target: 20 },   // Aumenta para 20 usuários
+        // { duration: '30s', target: 100 },   // Aumenta 100 usuários
+        // { duration: '30s', target: 500 },  // Aumenta para 500 usuários
     ],
     thresholds: {
-        http_req_duration: ['p(95)<500'], // 95% das requisições devem ser completadas em menos de 500ms
-        'latency': ['avg<300'],           // Latência média abaixo de 300ms
-        'throughput': ['avg>100'],        // Vazão média acima de 100 req/s
+        http_req_duration: ['p(95)<500'],  // 95% das requisições devem ser completadas em menos de 500ms
+        'latency': ['avg<300'],           // Latência média deve ser menor que 300ms
+        'throughput': ['avg>100'],              // Vazão média deve ser maior que 100 req/s
     },
 };
 
@@ -37,7 +36,7 @@ export default function () {
     };
 
      // Envia a requisição POST com os dados de formulário
-    const res = http.post(url, payload, params);
+     const res = http.post(url, payload, params);
 
     // Mede a latência e vazão
     latency.add(res.timings.duration);
