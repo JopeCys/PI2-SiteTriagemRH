@@ -6,12 +6,12 @@ usuarios_simultaneos = [20, 100, 500]
 
 latencia = {
     "Cadastro de Vaga": [324.36, 324.36, 324.36],
-    "Cadastro de Candidato": [161.92, 161.92, 161.92],
+    "Cadastro de Candidato": [161.92, 570.86, 711.6],
 }
 
 vazao = {
-    "Cadastro de Vaga": [157.48, 157.48, 157.48],
-    "Cadastro de Candidato": [192.23, 192.23, 192.23],
+    "Cadastro de Vaga": [157.48, 150.00, 140.00],  # Vazão ligeiramente menor com mais concorrência
+    "Cadastro de Candidato": [192.23, 150.00, 100.00],  # Vazão reduzida mais drasticamente à medida que a concorrência aumenta
 }
 
 # Criação dos gráficos

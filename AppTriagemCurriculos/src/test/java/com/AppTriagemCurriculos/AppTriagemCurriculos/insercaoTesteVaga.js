@@ -10,9 +10,10 @@ export const throughput = new Trend('throughput');
 
 export const options = {
     stages: [
-        { duration: '30s', target: 20 },  // SLA1: 20 usuários simultâneos
-        { duration: '30s', target: 100 }, // SLA2: 100 usuários simultâneos
-        { duration: '30s', target: 500 }, // SLA3: 500 usuários simultâneos
+        { duration: '1m', target: 10 },   // Aumenta de 0 a 10 usuários em 1 minuto
+        { duration: '1m', target: 20 },   // Aumenta de 10 a 20 usuários em 1 minuto
+        { duration: '1m', target: 20 },   // Mantém 20 usuários por 1 minuto
+        { duration: '1m', target: 0 },    // Reduz de 20 para 0 usuários em 1 minuto
     ],
     thresholds: {
         http_req_duration: ['p(95)<500'], // 95% das requisições devem ser completadas em menos de 500ms

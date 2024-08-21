@@ -13,10 +13,13 @@ public interface CandidatoRepository extends CrudRepository<Candidato, Long>
 {
     Candidato findById(long id);
 
-    Optional<Candidato> findByLoginAndEmail(String login, String email);
-    Optional<Candidato> findByLogin(String login);
+    Candidato findByLoginAndEmail(String login, String email);
+
+    Candidato findByLogin(String login);
     
-    List<Candidato> findByNome(String nome);
-    
-    
+    boolean existsByLoginAndEmail(String login, String e);
+
+    boolean existsByLoginAndSenha(String login, String e);
+
+    boolean existsByEmailAndSenha(String email, String senha);
 } 
