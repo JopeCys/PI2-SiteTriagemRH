@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "gerente_depto_vagas")
+@Table(name = "gerentedeptovagas")
 public class GerenteDeptoVagas {
 
     @Id
@@ -14,7 +14,6 @@ public class GerenteDeptoVagas {
     
     @OneToMany(mappedBy = "gerenteDeptoVagas")
     private Set<Vaga> vagas;
-    
     
     // Setters
     public void setId(Long id) {

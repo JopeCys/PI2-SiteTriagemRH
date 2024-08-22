@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "funcionario_rh")
+@Table(name = "funcionarioRH")
 public class FuncionarioRH {
 
     @Id
@@ -13,15 +13,15 @@ public class FuncionarioRH {
     private Long id;
 
     @OneToMany(mappedBy = "funcionarioRh")
-    private Set<Candidato> candidatos;
+    private Set<Curriculo> curriculos;
 
     // Setters
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setCandidatos(Set<Candidato> candidatos) {
-        this.candidatos = candidatos;
+    public void setcurriculos(Set<Curriculo> curriculos) {
+        this.curriculos = curriculos;
     }
 
     // Getters
@@ -29,9 +29,7 @@ public class FuncionarioRH {
         return id;
     }
 
-    public Set<Candidato> getCandidatos() {
-        return candidatos;
+    public Set<Curriculo> getcurriculos() {
+        return curriculos;
     }
-
-    
 }

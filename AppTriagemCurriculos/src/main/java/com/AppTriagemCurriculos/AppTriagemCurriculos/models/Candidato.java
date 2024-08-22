@@ -24,9 +24,8 @@ public class Candidato {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "funcionarioRhId")
-    private FuncionarioRH funcionarioRh;
+    @OneToMany(mappedBy = "candidato")
+    private Set<Curriculo> curriculos;
     
     // Setters
     public void setId(Long id) {
@@ -49,9 +48,6 @@ public class Candidato {
         this.email = email;
     }
 
-    public void setFuncionarioRh(FuncionarioRH funcionarioRh) {
-        this.funcionarioRh = funcionarioRh;
-    }
 
     public void setCurriculos(Set<Curriculo> curriculos) {
         this.curriculos = curriculos;
@@ -78,13 +74,7 @@ public class Candidato {
         return email;
     }
 
-    public FuncionarioRH getFuncionarioRh() {
-        return funcionarioRh;
-    }
-
     public Set<Curriculo> getCurriculos() {
         return curriculos;
     }
-    @OneToMany(mappedBy = "candidato")
-    private Set<Curriculo> curriculos;
 }
