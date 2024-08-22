@@ -33,5 +33,5 @@ Este projeto é um sistema de triagem de currículos desenvolvido em Java utiliz
 ## Configuração do Banco de Dados
 Certifique-se de que o MySQL está rodando e que você tem um banco de dados disponível para a aplicação. Configure o `application.properties` para apontar para o banco de dados correto:
 
-## Link para o relatório da 1ª Medição dos Testes de Carga
-- [1ª Medição dos Testes de Carga](https://docs.google.com/document/d/1YGqVkOvFD8hMST3ecu_SIfiIhmUaqhdp0bIca86ZSsM/edit?usp=sharing)
+## Link para o relatório das Medições dos Testes de Carga
+- [1ª e 2ª Medição dos Testes de Carga](https://docs.google.com/document/d/1YGqVkOvFD8hMST3ecu_SIfiIhmUaqhdp0bIca86ZSsM/edit?usp=sharing)
