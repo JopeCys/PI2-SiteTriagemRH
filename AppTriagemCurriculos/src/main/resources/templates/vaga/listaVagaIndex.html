@@ -2,16 +2,22 @@
 <html lang="pt-br" xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>| App Triagem RH |</title>
+
     <!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <body>
+
     <header>
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">App Triagem RH</a>
@@ -21,33 +27,40 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/funcionarioRH">Home</a></li>
+                        
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/homeCandidato">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout">Sair</a></li>
+                        
                     </ul>
                 </div>
             </div>
         </nav>
+
     </header>
 
-    <th:block th:include="mensagemValidacao"> </th:block>
+	<th:block th:include="mensagemValidacao"> </th:block>
 
     <div class="container">
-        <h1>Lista de Candidatos</h1>
+
+        <h1>Lista de vagas cadastradas</h1>
 
         <table class="table table-hover table-responsive w-auto table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Nome:</th>
-                    <th scope="col">Email:</th>
+                    <th scope="col">Nome da vaga:</th>
+                    <th scope="col">Area do cargo:</th>
+                    <th scope="col">Descrição:</th>
                     <th scope="col">Ações:</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="candidato : ${candidatos}">
-                    <td th:text="${candidato.nome}"></td>
-                    <td th:text="${candidato.email}"></td>
+                <tr th:each="vaga : ${vagas}">
+                    <td><span th:text="${vaga.nome}"></span></td>
+                    <td><span th:text="${vaga.area}"></span></td>
+                    <td><span th:text="${vaga.descricao}"></span></td>
                     <td>
-                        <a th:href="@{/editarCandidato(id=${candidato.id})}" class="btn btn-warning">Editar</a>
-                        <a th:href="@{/excluirCandidato(id=${candidato.id})}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este candidato?');">Excluir</a>
+                        <small class="form-text text-muted"><i>* Faça Login para se candidatar :D</i></small>
                     </td>
                 </tr>
             </tbody>

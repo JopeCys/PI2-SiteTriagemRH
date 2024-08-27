@@ -1,6 +1,5 @@
 package com.AppTriagemCurriculos.AppTriagemCurriculos.models;
 
-
 import jakarta.persistence.*;
 
 @Entity
@@ -9,17 +8,17 @@ public class Curriculo
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CurriculoId")
+    @Column(name = "curriculoId")
     private Long id;
 
-    @Column(name = "Nome", nullable = false)
+    @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(name = "MongoId", nullable = false)
+    @Column(name = "mongoId", nullable = false)
     private String mongoId;
 
     @ManyToOne
-    @JoinColumn(name = "CandidatoId")
+    @JoinColumn(name = "candidatoId")
     private Candidato candidato;
 
     @ManyToOne
@@ -35,6 +34,14 @@ public class Curriculo
         this.id = id;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setMongoId(String mongoId) {
+        this.mongoId = mongoId;
+    }
+
     public void setCandidato(Candidato candidato) {
         this.candidato = candidato;
     }
@@ -46,6 +53,14 @@ public class Curriculo
     // Getters
     public Long getId() {
         return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getMongoId() {
+        return mongoId;
     }
 
     public Candidato getCandidato() {

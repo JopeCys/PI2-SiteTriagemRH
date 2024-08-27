@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>| App Triagem RH |</title>
+    <title>| App Triagem RH | Funcionários RH</title>
     <!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -28,26 +28,21 @@
         </nav>
     </header>
 
-    <th:block th:include="mensagemValidacao"> </th:block>
+    <th:block th:include="mensagemValidacao"></th:block>
 
     <div class="container">
-        <h1>Lista de Candidatos</h1>
+        <h1>Lista de Funcionários RH</h1>
 
         <table class="table table-hover table-responsive w-auto table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Nome:</th>
-                    <th scope="col">Email:</th>
-                    <th scope="col">Ações:</th>
+                    <th scope="col">Funcionários:</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="candidato : ${candidatos}">
-                    <td th:text="${candidato.nome}"></td>
-                    <td th:text="${candidato.email}"></td>
+                <tr th:each="funcionario, iterStat : ${funcionarios}">
                     <td>
-                        <a th:href="@{/editarCandidato(id=${candidato.id})}" class="btn btn-warning">Editar</a>
-                        <a th:href="@{/excluirCandidato(id=${candidato.id})}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este candidato?');">Excluir</a>
+                        <span th:text="'Funcionário RH ' + ${iterStat.index + 1}"></span>
                     </td>
                 </tr>
             </tbody>

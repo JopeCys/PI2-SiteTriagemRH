@@ -8,17 +8,35 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.models.Candidato;
+import com.AppTriagemCurriculos.AppTriagemCurriculos.models.Curriculo;
+import com.AppTriagemCurriculos.AppTriagemCurriculos.models.Vaga;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.repository.CandidatoRepository;
+import com.AppTriagemCurriculos.AppTriagemCurriculos.repository.CurriculoRepository;
+import com.AppTriagemCurriculos.AppTriagemCurriculos.repository.VagaRepository;
+import com.AppTriagemCurriculos.AppTriagemCurriculos.services.PdfDocumentService;
+
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
 public class CandidatoController {
-     @Autowired
+
+    @Autowired
     private CandidatoRepository cr;
-    
+
+    @Autowired
+    private VagaRepository vagaRepository;
+
+    @Autowired
+    private CurriculoRepository curriculoRepository;
+
+    @Autowired
+    private PdfDocumentService pdfService;
+
     // AUTO CADASTRO DO CANDIDATO
 
     // Chama .html do formulário de cadastro de Candidato
@@ -32,6 +50,13 @@ public class CandidatoController {
     public String mostrarLoginCandidato() {
         return "candidato/loginCandidato";
     }
+
+    // Chama .html do login do Candidato
+    @GetMapping("/homeCandidato")
+    public String mostrarHomeCandidato() {
+        return "candidato/home";
+    }
+
 
 
     // Registra formulário de candidato e trata possíveis erros
@@ -53,7 +78,7 @@ public class CandidatoController {
             redirectAttributes.addFlashAttribute("mensagem", mensagem);
             return "redirect:/cadastrarCandidato";
         }
-
+        
         // Registra os dados
         cr.save(candidato);
         mensagem = "Candidato cadastrado com sucesso!";
@@ -61,8 +86,11 @@ public class CandidatoController {
         return "redirect:/cadastrarCandidato";
     }
 
+
+
+
     // Mostrar candidatos existentes
-    @GetMapping("/candidatos")
+    @GetMapping("/listaCandidatos")
     public ModelAndView listarCandidatos() {
         ModelAndView mv = new ModelAndView("candidato/listaCandidatos");
         Iterable<Candidato> candidatos = cr.findAll();
@@ -70,26 +98,25 @@ public class CandidatoController {
         return mv;
     }
 
-    // Criptografia da senha
 
-    // A  fazer, para se se Candidatar a uma vaga, o candidato precisa estar logado
-    // @RequestMapping(value = "/candidatar", method = RequestMethod.POST)
-    // public ModelAndView vagaParaEditar(@RequestParam("vagaId") long vagaId)
+
 
     // LOGIN DOS CANDIDATOS
     @PostMapping("/loginCandidato")
     public String validarLogin(@RequestParam("login") String loginOrEmail, 
-                                @RequestParam("senha") String senha, 
-                                RedirectAttributes redirectAttributes) 
+                            @RequestParam("senha") String senha, 
+                            HttpSession session, 
+                            RedirectAttributes redirectAttributes) 
     {
         String mensagem;
 
-        // Verifica se o candidato existe com o login e a senha fornecidos
-        boolean candidatoExiste = cr.existsByLoginAndSenha(loginOrEmail, senha) || cr.existsByEmailAndSenha(loginOrEmail, senha);
-        
-        if (candidatoExiste) {
-            // Login bem-sucedido
-            return "redirect:/vagasCandidato"; // Direciona para a página de vagas do candidato
+        // Busca o candidato pelo login ou email e senha
+        Candidato candidato = cr.findByLoginOrEmailAndSenha(loginOrEmail, senha);
+
+        if (candidato != null) {
+            // Login bem-sucedido, armazena o candidato na sessão
+            session.setAttribute("candidatoLogado", candidato);
+            return "redirect:/homeCandidato"; // Direciona para a página de vagas do candidato
         } else {
             // Login falhou
             mensagem = "Login/e-mail ou senha inválidos.";
@@ -97,4 +124,61 @@ public class CandidatoController {
             return "redirect:/loginCandidato";
         }
     }
+
+    // Método para logout
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/loginCandidato";
+    }
+
+
+    // Enviar currículo para uma vaga
+    @PostMapping("/enviarCurriculo")
+    public String enviarCurriculo(@RequestParam("vagaId") Long vagaId, 
+                                  @RequestParam("file") MultipartFile file, 
+                                  HttpSession session, 
+                                  RedirectAttributes redirectAttributes) {
+        Candidato candidatoLogado = (Candidato) session.getAttribute("candidatoLogado");
+
+        if (candidatoLogado == null) {
+            return "redirect:/vagasCandidato";
+        }
+
+        try {
+            // Salva o currículo no MongoDB e associa ao candidato e à vaga
+            Curriculo curriculo = new Curriculo();
+            curriculo.setCandidato(candidatoLogado);
+            Vaga vaga = vagaRepository.findById(vagaId).orElseThrow(() -> new RuntimeException("Vaga não encontrada"));
+            curriculo.setVaga(vaga);
+            pdfService.savePdf(file, curriculo.getId());
+            curriculoRepository.save(curriculo);
+
+            redirectAttributes.addFlashAttribute("mensagem", "Currículo enviado com sucesso!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("mensagem", "Falha ao enviar currículo. Tente novamente.");
+        }
+
+        return "redirect:/vagasCandidato";
+    }
+
+
+    // Excluir candidato
+    @GetMapping("/excluirCandidato")
+    public String excluirCandidato(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
+        cr.deleteById(id);
+        redirectAttributes.addFlashAttribute("mensagem", "Candidato excluído com sucesso!");
+        return "redirect:/listarcandidatos";
+    }
+
+    // Editar candidato (essa é uma rota de exemplo, que precisaria ser mais elaborada para funcionar completamente)
+    @GetMapping("/editarCandidato")
+    public ModelAndView editarCandidato(@RequestParam("id") Long id) {
+        ModelAndView mv = new ModelAndView("candidato/formCandidato");
+        Candidato candidato = cr.findById(id).orElse(null);
+        mv.addObject("candidato", candidato);
+        return mv;
+    }
+
+
 }

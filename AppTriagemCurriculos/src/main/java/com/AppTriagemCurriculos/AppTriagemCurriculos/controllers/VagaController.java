@@ -69,6 +69,16 @@ public class VagaController {
         return mv;
     }
 
+    // para gerente pessoas não logadas
+    @GetMapping("/vagasIndex")
+    public ModelAndView listarVagasIndex() 
+    {
+        ModelAndView mv = new ModelAndView("vaga/listaVagaIndex");
+        Iterable<Vaga> vagas = vr.findAll();
+        mv.addObject("vagas", vagas);
+        return mv;
+    }
+
     // DELETAR VAGA
     @PostMapping("/deletarVaga")
     public String deletarVaga(@RequestParam("vagaId") long vagaId, RedirectAttributes redirectAttributes) {
