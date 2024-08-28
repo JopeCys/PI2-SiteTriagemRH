@@ -5,11 +5,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>| App Triagem RH | Funcionários RH</title>
+    <title>| App Triagem RH | Opções do Gerente</title>
     <!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -21,34 +20,40 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/funcionarioRH">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <th:block th:include="mensagemValidacao"></th:block>
-
-    <th:block th:include="mensagemValidacao"></th:block>
-
-    <div class="container">
-        <h1>Lista de Funcionários RH</h1>
+    <div class="container mt-5">
+        <h1>Lista de Currículos</h1>
 
         <table class="table table-hover table-responsive w-auto table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Funcionário RH</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Candidato</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="funcionarioRH : ${funcionarioRHs}">
-                    <td th:text="'Funcionário RH ' + ${funcionarioRH.id}"></td>
+                <tr th:each="curriculo : ${curriculos}">
+                    <td th:text="${curriculo.nome}"></td>
+                    <td th:text="${curriculo.candidato.nome}"></td>
                     <td>
-                        <form th:action="@{/escolherFuncionarioRH}" method="get">
-                            <input type="hidden" name="funcionarioRhId" th:value="${funcionarioRH.id}" />
-                            <button type="submit" class="btn btn-primary">Selecionar</button>
+                        <form th:action="@{/curriculo/aprovar}" method="post">
+                            <input type="hidden" name="curriculoId" th:value="${curriculo.id}" />
+                            <button class="btn btn-success" type="submit">Aprovar</button>
+                        </form>
+                        <form th:action="@{/curriculo/rejeitar}" method="post">
+                            <input type="hidden" name="curriculoId" th:value="${curriculo.id}" />
+                            <button class="btn btn-warning" type="submit">Rejeitar</button>
+                        </form>
+                        <form th:action="@{/curriculo/excluir}" method="post">
+                            <input type="hidden" name="curriculoId" th:value="${curriculo.id}" />
+                            <button class="btn btn-danger" type="submit">Excluir</button>
                         </form>
                     </td>
                 </tr>
@@ -59,7 +64,5 @@
     <footer class="footer fixed-bottom bg-dark text-center py-3">
         <span class="text-light align-middle">| App Triagem RH |</span>
     </footer>
-    </div>
 </body>
-
 </html>

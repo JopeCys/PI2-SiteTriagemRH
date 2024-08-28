@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>| App Triagem RH | Início</title>
+    <title>| App Triagem RH | Opções do Gerente</title>
     <!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -29,18 +29,16 @@
     </header>
 
     <div class="container mt-5">
-        <h1 class="text-center">Bem-vindo ao App Triagem RH</h1>
-        <p class="text-center">Escolha a área para continuar:</p>
-
+        <h1 class="text-center">Opções para o Gerente Depto Vagas</h1>
         <div class="row justify-content-center mt-4">
             <div class="col-md-4">
                 <div class="card text-center">
                     <div class="card-header">
-                        Área de Funcionários
+                        Ver Vagas Criadas
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Clique abaixo para acessar a área de funcionários.</p>
-                        <a href="/funcionarioGerente" class="btn btn-primary">Área de Funcionários</a>
+                        <p class="card-text">Visualize todas as vagas que você criou.</p>
+                        <a th:href="@{/listarVagasPorGerente/{gerenteDeptoVagasId}(gerenteDeptoVagasId=${gerente.id})}" class="btn btn-primary">Ver Vagas</a>
                     </div>
                 </div>
             </div>
@@ -48,11 +46,11 @@
             <div class="col-md-4">
                 <div class="card text-center">
                     <div class="card-header">
-                        Área de Candidatos
+                        Cadastrar Nova Vaga
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Clique abaixo para acessar a área de candidatos.</p>
-                        <a href="/preloginCandidato" class="btn btn-success">Área de Candidatos</a>
+                        <p class="card-text">Cadastre uma nova vaga no sistema.</p>
+                        <a th:href="@{/cadastrarVaga/{gerenteDeptoVagasId}(gerenteDeptoVagasId=${gerente.id})}" class="btn btn-success">Cadastrar Vaga</a>
                     </div>
                 </div>
             </div>

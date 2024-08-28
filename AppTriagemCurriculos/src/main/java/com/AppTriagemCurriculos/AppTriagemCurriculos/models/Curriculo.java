@@ -46,6 +46,10 @@ public class Curriculo
         this.candidato = candidato;
     }
 
+    public void setFuncionarioRh(FuncionarioRH funcionarioRh) {
+        this.funcionarioRh = funcionarioRh;
+    }
+
     public void setVaga(Vaga vaga) {
         this.vaga = vaga;
     }
@@ -65,6 +69,10 @@ public class Curriculo
 
     public Candidato getCandidato() {
         return candidato;
+    }
+
+    public FuncionarioRH getFuncionarioRh() {
+        return funcionarioRh;
     }
 
     public Vaga getVaga() {

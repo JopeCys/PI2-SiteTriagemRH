@@ -12,5 +12,7 @@ public interface CurriculoRepository extends CrudRepository<Curriculo, Long>
     Curriculo findById(int id);
 
     List<Curriculo> findByVaga(Vaga vaga);
+
+    Iterable<Curriculo> findByFuncionarioRhId(Long funcionarioRhId);
 }
 

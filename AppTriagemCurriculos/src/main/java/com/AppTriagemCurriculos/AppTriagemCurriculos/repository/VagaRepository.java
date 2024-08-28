@@ -15,4 +15,6 @@ public interface VagaRepository extends CrudRepository<Vaga, Long> {
     Boolean existsByNomeAndArea(String nome, String area);
     
     Boolean existsById(long vagaId);
+
+    Iterable<Vaga> findByGerenteDeptoVagasId(Long gerenteDeptoVagasId);
 }

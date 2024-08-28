@@ -21,7 +21,10 @@ public class PdfDocumentService {
     @Autowired
     private CurriculoRepository curriculoRepository;
 
-    @Transactional
+    public PdfDocument savePdf(PdfDocument pdfDocument) {
+        return pdfRepository.save(pdfDocument);
+    }
+
     public void savePdf(MultipartFile file, Long curriculoId) throws IOException {
         // Salva o PDF no MongoDB
         PdfDocument pdfDocument = new PdfDocument();

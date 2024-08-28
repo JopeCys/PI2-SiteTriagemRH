@@ -1,6 +1,7 @@
 package com.AppTriagemCurriculos.AppTriagemCurriculos.controllers;
 
 
+import java.util.List;
 // Imports
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,12 +14,16 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.models.Candidato;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.models.Curriculo;
+import com.AppTriagemCurriculos.AppTriagemCurriculos.models.FuncionarioRH;
+import com.AppTriagemCurriculos.AppTriagemCurriculos.models.PdfDocument;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.models.Vaga;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.repository.CandidatoRepository;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.repository.CurriculoRepository;
+import com.AppTriagemCurriculos.AppTriagemCurriculos.repository.FuncionarioRHRepository;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.repository.VagaRepository;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.services.PdfDocumentService;
 
+import java.util.Random;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -37,6 +42,9 @@ public class CandidatoController {
     @Autowired
     private PdfDocumentService pdfService;
 
+    @Autowired
+    private FuncionarioRHRepository fr;
+
     // AUTO CADASTRO DO CANDIDATO
 
     // Chama .html do formulário de cadastro de Candidato
@@ -51,10 +59,16 @@ public class CandidatoController {
         return "candidato/loginCandidato";
     }
 
-    // Chama .html do login do Candidato
+    // Chama .html do home do Candidato logado
     @GetMapping("/homeCandidato")
     public String mostrarHomeCandidato() {
         return "candidato/home";
+    }
+
+    // Chama .html do home do Candidato prelogin
+    @GetMapping("/preloginCandidato")
+    public String mostrarPreloginCandidato() {
+        return "candidato/prelogin";
     }
 
 
@@ -140,28 +154,44 @@ public class CandidatoController {
                                   HttpSession session, 
                                   RedirectAttributes redirectAttributes) {
         Candidato candidatoLogado = (Candidato) session.getAttribute("candidatoLogado");
-
+    
         if (candidatoLogado == null) {
-            return "redirect:/vagasCandidato";
+            return "redirect:/loginCandidato";
         }
-
+    
         try {
-            // Salva o currículo no MongoDB e associa ao candidato e à vaga
+            // Salva o currículo no MongoDB
+            PdfDocument pdfDocument = new PdfDocument();
+            pdfDocument.setNomeArquivo(file.getOriginalFilename());
+            pdfDocument.setConteudo(file.getBytes());
+            PdfDocument savedPdf = pdfService.savePdf(pdfDocument);
+    
+            // Cria o currículo e associa ao candidato, vaga e funcionário RH
             Curriculo curriculo = new Curriculo();
             curriculo.setCandidato(candidatoLogado);
+    
             Vaga vaga = vagaRepository.findById(vagaId).orElseThrow(() -> new RuntimeException("Vaga não encontrada"));
             curriculo.setVaga(vaga);
-            pdfService.savePdf(file, curriculo.getId());
+    
+            // Seleciona aleatoriamente um dos funcionários RH
+            List<FuncionarioRH> funcionariosRH = (List<FuncionarioRH>) fr.findAll(); 
+            if (funcionariosRH.isEmpty()) {
+                redirectAttributes.addFlashAttribute("mensagem", "Nenhum responsável (RH) encontrado. Por favor, tente novamente mais tarde.");
+                return "redirect:/vagasCandidato";
+            }
+            FuncionarioRH funcionarioRH = funcionariosRH.get(new Random().nextInt(funcionariosRH.size()));
+    
+            curriculo.setFuncionarioRh(funcionarioRH);
+            curriculo.setMongoId(savedPdf.getId());
             curriculoRepository.save(curriculo);
-
+    
             redirectAttributes.addFlashAttribute("mensagem", "Currículo enviado com sucesso!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("mensagem", "Falha ao enviar currículo. Tente novamente.");
         }
-
+    
         return "redirect:/vagasCandidato";
     }
-
 
     // Excluir candidato
     @GetMapping("/excluirCandidato")

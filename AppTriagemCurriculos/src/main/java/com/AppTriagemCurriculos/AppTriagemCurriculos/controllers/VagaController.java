@@ -2,16 +2,22 @@ package com.AppTriagemCurriculos.AppTriagemCurriculos.controllers;
 
 // Imports
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.AppTriagemCurriculos.AppTriagemCurriculos.models.GerenteDeptoVagas;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.models.Vaga;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.repository.VagaRepository;
+
+
 
 @Controller
 public class VagaController {
@@ -19,33 +25,41 @@ public class VagaController {
     @Autowired
     private VagaRepository vr;
 
-    // CADASTRO DE VAGA
+    // Mostra as vagas criadas por um gerente específico
+    @GetMapping("/listarVagasPorGerente/{gerenteDeptoVagasId}")
+    public ModelAndView listarVagasPorGerente(@PathVariable Long gerenteDeptoVagasId) {
+        ModelAndView mv = new ModelAndView("vaga/listaVaga");
+        Iterable<Vaga> vagas = vr.findByGerenteDeptoVagasId(gerenteDeptoVagasId);
+        mv.addObject("vagas", vagas);
+        return mv;
+    }
 
-    // Chama .html do formulário de cadastro de vaga
-    @GetMapping("/cadastrarVaga")
-    public String mostrarFormulario() {
+    // CADASTRO DE VAGA
+    @GetMapping("/cadastrarVaga/{gerenteDeptoVagasId}")
+    public String mostrarFormulario(@PathVariable Long gerenteDeptoVagasId, Model model) {
+        Vaga vaga = new Vaga();
+        GerenteDeptoVagas gerenteDeptoVagas = new GerenteDeptoVagas();
+        gerenteDeptoVagas.setId(gerenteDeptoVagasId);
+        vaga.setGerenteDeptoVagas(gerenteDeptoVagas);
+        model.addAttribute("vaga", vaga);
         return "vaga/formVaga";
     }
 
-    // Registra formulário e trata possíveis erros
     @PostMapping("/cadastrarVaga")
     public String registrarFormulario(@Valid Vaga vaga, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         String mensagem;
-        
-        // Se tiver erros no preenchimento do formulário
+
         if (bindingResult.hasErrors()) {
             mensagem = "Verifique os campos corretamente...";
         } else if (vr.existsByNomeAndArea(vaga.getNome(), vaga.getArea())) {
-            // Verifica se a vaga já existe
             mensagem = "Vaga já existe! Não é permitido duplicidade.";
         } else {
-            // Registra os dados
             vr.save(vaga);
             mensagem = "Vaga cadastrada com sucesso!";
         }
-        
+
         redirectAttributes.addFlashAttribute("mensagem", mensagem);
-        return "redirect:/cadastrarVaga";
+        return "redirect:/listarVagasPorGerente/" + vaga.getGerenteDeptoVagas().getId();
     }
 
     // MOSTAR VAGAS EXISTENTES
