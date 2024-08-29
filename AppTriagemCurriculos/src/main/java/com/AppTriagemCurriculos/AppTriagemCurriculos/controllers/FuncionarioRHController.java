@@ -15,7 +15,6 @@ import com.AppTriagemCurriculos.AppTriagemCurriculos.models.FuncionarioRH;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.repository.CurriculoRepository;
 import com.AppTriagemCurriculos.AppTriagemCurriculos.repository.FuncionarioRHRepository;
 
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class FuncionarioRHController {

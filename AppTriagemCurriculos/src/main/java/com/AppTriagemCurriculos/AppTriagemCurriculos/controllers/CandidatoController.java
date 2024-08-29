@@ -130,6 +130,7 @@ public class CandidatoController {
         if (candidato != null) {
             // Login bem-sucedido, armazena o candidato na sessão
             session.setAttribute("candidatoLogado", candidato);
+            session.setAttribute("candidatoId", candidato.getId());
             return "redirect:/homeCandidato"; // Direciona para a página de vagas do candidato
         } else {
             // Login falhou
@@ -168,22 +169,26 @@ public class CandidatoController {
     
             // Cria o currículo e associa ao candidato, vaga e funcionário RH
             Curriculo curriculo = new Curriculo();
+            curriculo.setNome(file.getOriginalFilename());
             curriculo.setCandidato(candidatoLogado);
-    
+            curriculo.setMongoId(savedPdf.getId());
+     
+            // Caso no momento de se candidatar um gerente tenha excluído a vaga
             Vaga vaga = vagaRepository.findById(vagaId).orElseThrow(() -> new RuntimeException("Vaga não encontrada"));
             curriculo.setVaga(vaga);
     
             // Seleciona aleatoriamente um dos funcionários RH
             List<FuncionarioRH> funcionariosRH = (List<FuncionarioRH>) fr.findAll(); 
             if (funcionariosRH.isEmpty()) {
+                // Caso não tenha funcionario rh no banco no momento
                 redirectAttributes.addFlashAttribute("mensagem", "Nenhum responsável (RH) encontrado. Por favor, tente novamente mais tarde.");
                 return "redirect:/vagasCandidato";
             }
             FuncionarioRH funcionarioRH = funcionariosRH.get(new Random().nextInt(funcionariosRH.size()));
     
-            curriculo.setFuncionarioRh(funcionarioRH);
-            curriculo.setMongoId(savedPdf.getId());
-            curriculoRepository.save(curriculo);
+            curriculo.setFuncionarioRh(funcionarioRH); // Associa o funcionário RH ao currículo
+            curriculoRepository.save(curriculo); // Salva o currículo no banco de dados
+
     
             redirectAttributes.addFlashAttribute("mensagem", "Currículo enviado com sucesso!");
         } catch (Exception e) {

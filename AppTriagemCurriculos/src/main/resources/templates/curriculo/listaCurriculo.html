@@ -33,24 +33,32 @@
         <table class="table table-hover table-responsive w-auto table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Candidato</th>
-                    <th scope="col">Ações</th>
+                    <th scope="col">Nome:</th>
+                    <th scope="col">Candidato:</th>
+                    <th scope="col"></th>
+                    <th scope="col">Ações:</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="curriculo : ${curriculos}">
-                    <td th:text="${curriculo.nome}"></td>
-                    <td th:text="${curriculo.candidato.nome}"></td>
+                    <td th:text="${curriculo.nome}"></span></td>
+                    <td th:text="${curriculo.candidato.nome}"></span></td>
+                    <td><span></span></td>
                     <td>
                         <form th:action="@{/curriculo/aprovar}" method="post">
                             <input type="hidden" name="curriculoId" th:value="${curriculo.id}" />
                             <button class="btn btn-success" type="submit">Aprovar</button>
                         </form>
+                    </td>
+                    
+                    <td>
                         <form th:action="@{/curriculo/rejeitar}" method="post">
                             <input type="hidden" name="curriculoId" th:value="${curriculo.id}" />
                             <button class="btn btn-warning" type="submit">Rejeitar</button>
                         </form>
+                    </td>
+                    <td>
                         <form th:action="@{/curriculo/excluir}" method="post">
                             <input type="hidden" name="curriculoId" th:value="${curriculo.id}" />
                             <button class="btn btn-danger" type="submit">Excluir</button>
