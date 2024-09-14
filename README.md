@@ -14,6 +14,7 @@ Este projeto é um sistema de triagem de currículos desenvolvido em Java utiliz
 - **Spring Boot 3.x**
 - **Spring Data JPA**
 - **MySQL**
+- **MongoDB Atlas**
 - **Thymeleaf**
 - **Bootstrap**
 - **JUnit e Mockito** para testes
@@ -23,15 +24,17 @@ Este projeto é um sistema de triagem de currículos desenvolvido em Java utiliz
 - **Modelos (`models`)**: Contém as classes que representam as entidades no banco de dados.
 - **Repositórios (`repository`)**: Interfaces que lidam com a persistência de dados, estendendo `JpaRepository`.
 - **Controladores (`controllers`)**: Classes que lidam com as requisições HTTP e coordenam as respostas.
-- **Templates**: Páginas HTML processadas pelo Thymeleaf.
+- **Visualizadores (`views`)**: Páginas HTML processadas pelo Thymeleaf.
 
 ## Pré-requisitos
 - **Java 17**
 - **MySQL**
+- **MongoDB Atlas**
 - **Maven**
 
 ## Configuração do Banco de Dados
-Certifique-se de que o MySQL está rodando e que você tem um banco de dados disponível para a aplicação. Configure o `application.properties` para apontar para o banco de dados correto:
+Certifique-se de que o MySQL está rodando e que você tem um banco de dados disponível para a aplicação. Configure o `DataConfiguration` para definir o banco de dados correto.
+Certifique-se de criar uma variável ambiente chamada "MONGODB_URI" que recebe o link do banco MongoDB Atlas.
 
 ## Link para o relatório das Medições dos Testes de Carga
 - [1ª e 2ª Medição dos Testes de Carga](https://docs.google.com/document/d/1YGqVkOvFD8hMST3ecu_SIfiIhmUaqhdp0bIca86ZSsM/edit?usp=sharing)
