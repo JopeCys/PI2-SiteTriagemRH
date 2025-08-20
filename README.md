@@ -1,4 +1,4 @@
-# App Triagem RH
+# Site Triagem RH
 
 ## Descrição
 Este projeto é um sistema de triagem de currículos desenvolvido em Java utilizando o framework Spring Boot. Ele permite o gerenciamento de vagas de emprego, currículos, candidatos, e funcionários de recursos humanos.
